@@ -1,6 +1,8 @@
 import { birthdaysOn, daysInMonth, monthCells, monthName, sameDate, WEEKDAYS } from '@/lib/birthdays'
 import type { BirthdayEntry, CalendarDate } from '@/lib/birthdays'
 
+const SHORT_WEEKDAYS = ['Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb', 'Mg']
+
 interface Props {
   year: number
   today: CalendarDate
@@ -29,7 +31,8 @@ export function YearView({ year, today, birthdays, onOpenMonth }: Props) {
               </span>
             </div>
             <div className="mini-calendar">
-              {WEEKDAYS.map((weekday) => <span className="mini-weekday" key={weekday}>{weekday}</span>)}
+              {WEEKDAYS.map((weekday, index) =>
+                <span className="mini-weekday" data-short={SHORT_WEEKDAYS[index]} key={weekday}>{weekday}</span>)}
               {monthCells(year, month).map((day, index) => {
                 if (day === null) return <span className="mini-day empty" key={`blank-${index}`} />
                 const date = { year, month, day }

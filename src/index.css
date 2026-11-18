@@ -138,6 +138,8 @@ button:focus-visible, .month-scroll:focus-visible { outline: 3px solid #e9a26e; 
   .header-note, .heading-art { display: none; }
   .page-heading { padding: 43px 0 30px; }
   .page-heading h1 { font-size: clamp(33px, 7vw, 45px); }
+  .month-grid { min-width: 0; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .month-day, .month-empty { min-height: 100px; }
   .year-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 17px; gap: 11px; }
   .person-grid { grid-template-columns: 1fr; }
   .calendar-toolbar { align-items: flex-start; flex-direction: column; gap: 16px; padding: 19px; }
@@ -145,17 +147,37 @@ button:focus-visible, .month-scroll:focus-visible { outline: 3px solid #e9a26e; 
 @media (max-width: 500px) {
   .brand-name { font-size: 11px; }
   .page-description { font-size: 13px; }
+  .month-weekday { height: 34px; font-size: 9px; letter-spacing: 0; }
+  .month-day, .month-empty { min-height: 76px; }
+  .month-day { gap: 2px; padding: 5px 2px; }
+  .day-number { width: 24px; height: 24px; font-size: 12px; }
+  .today-caption { font-size: 7px; letter-spacing: 0; }
+  .birthday-list { gap: 2px; margin-top: 0; }
+  .birthday-chip { display: block; padding: 3px 2px; font-size: 9px; line-height: 1.1; }
+  .chip-dot { display: none; }
   .today-banner { flex-wrap: wrap; gap: 12px; padding: 19px; }
   .banner-icon { flex-basis: 44px; height: 44px; }
   .banner-copy { flex: 1 1 calc(100% - 60px); }
   .banner-link { margin-left: 56px; }
-  .year-grid { grid-template-columns: 1fr; }
-  .mini-month { padding: 19px; }
-  .mini-day { height: 34px; width: 34px; font-size: 12px; }
+  .year-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 11px; gap: 9px; }
+  .mini-month { padding: 11px 8px 9px; border-radius: 10px; }
+  .mini-month.is-current-month { border-color: #d96649; box-shadow: inset 0 0 0 1px #d96649; }
+  .mini-month.is-current-month .mini-month-title { color: #b94e32; }
+  .mini-month-heading { margin-bottom: 8px; gap: 3px; }
+  .mini-month-title { font-size: clamp(12px, 3.3vw, 14px); }
+  .mini-count { min-width: 18px; height: 18px; padding: 2px 4px; font-size: 9px; }
+  .mini-calendar { row-gap: 2px; }
+  .mini-weekday { font-size: clamp(7px, 2vw, 8px); }
+  .mini-day { width: min(18px, 100%); height: auto; aspect-ratio: 1; font-size: clamp(8px, 2.3vw, 9px); }
+  .mini-dot { width: 2px; height: 2px; bottom: 1px; }
   .day-content { padding: 17px; }
   .person-card { padding: 17px; gap: 13px; }
   .invalid-panel { grid-template-columns: 1fr; }
   .site-footer span:last-child { display: none; }
+}
+@media (max-width: 360px) {
+  .mini-weekday { font-size: 0; }
+  .mini-weekday::after { content: attr(data-short); font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .loading-ring, .calendar-panel:not(.native-transitions) .calendar-view { animation: none; }

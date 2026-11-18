@@ -17,7 +17,8 @@ export function BirthdayCalendar() {
   // const today = { year: 2026, month: 7, day: 16 }
   const { loadState, birthdays, invalid, retry } = useBirthdayData()
   const [selectedDate, setSelectedDate] = useState(() => localDate(new Date()))
-  const [view, setView] = useState<View>('year')
+  const [view, setView] = useState<View>(() =>
+    window.matchMedia('(max-width: 500px)').matches ? 'month' : 'year')
   const todayBirthdays = birthdaysOn(birthdays, today)
   const nativeTransitions = typeof document.startViewTransition === 'function' &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches
