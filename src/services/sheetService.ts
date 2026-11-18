@@ -1,14 +1,21 @@
-import type { UserItem } from "@/schema/schemas";
+import type { UserItem } from '@/schema/types'
 
-const GAS_URL = import.meta.env.VITE_GAS_URL;
+const GAS_URL = import.meta.env.VITE_GAS_URL
 
-export const fetchUsers = async (): Promise<UserItem[]> => {
-    const response = await fetch(GAS_URL);
-    const result = await response.json();
+export async function fetchUsers(signal?: AbortSignal): Promise<UserItem[]> {
+  if (!GAS_URL) throw new Error('Alamat API belum dikonfigurasi.')
 
-    if (result.status !== "success") {
-        throw new Error("Gagal mengambil data dari Sheets");
-    }
-    
-    return result.data;
-};
+  const response = await fetch(GAS_URL, { signal })
+  if (!response.ok) throw new Error('Data ulang tahun gagal dimuat. Coba lagi.')
+
+  const result: unknown = await response.json()
+  if (
+    typeof result !== 'object' || result === null ||
+    !('status' in result) || result.status !== 'success' ||
+    !('data' in result) || !Array.isArray(result.data)
+  ) {
+    throw new Error('Format data ulang tahun tidak sesuai.')
+  }
+
+  return result.data as UserItem[]
+}
