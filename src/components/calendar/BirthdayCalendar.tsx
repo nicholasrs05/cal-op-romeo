@@ -9,11 +9,12 @@ import { TodayBanner } from './TodayBanner'
 import { YearView } from './YearView'
 import type { View } from './types'
 import { useBirthdayData } from '@/hooks/useBirthdayData'
+import { useLocalToday } from '@/hooks/useLocalToday'
 import { birthdaysOn, localDate, moveDay, moveMonth } from '@/lib/birthdays'
 
 export function BirthdayCalendar() {
-  // const today = useLocalToday()
-  const today = { year: 2026, month: 7, day: 16 }
+  const today = useLocalToday()
+  // const today = { year: 2026, month: 7, day: 16 }
   const { loadState, birthdays, invalid, retry } = useBirthdayData()
   const [selectedDate, setSelectedDate] = useState(() => localDate(new Date()))
   const [view, setView] = useState<View>('year')
